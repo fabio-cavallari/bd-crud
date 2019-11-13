@@ -1,8 +1,11 @@
 import { Router } from "express";
-import { getStories } from "./service";
+import { postStories, getStories, putStories, deleteStories } from "./service";
 
 const routes = new Router();
 
-routes.get("/", getStories);
+routes.post("/", postStories); //create
+routes.get("/", getStories); //read
+routes.put("/", putStories); //update
+routes.delete("/", deleteStories); //delete
 
 export default routes;
