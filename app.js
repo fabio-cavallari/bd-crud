@@ -6,7 +6,7 @@ const port = 5000;
 
 const app = express();
 setMiddlewares(app);
-connectWithDatabase(connection);
+// connectWithDatabase(connection);
 
 app.listen(port, () => {
   console.log("servidor rodando na porta ", port);
