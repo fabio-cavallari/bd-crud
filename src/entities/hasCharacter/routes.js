@@ -12,8 +12,8 @@ routes.post("/", postHasCharacter);
 
 routes.get("/", getHasCharacters);
 
-routes.put("/id_hq=:id_hq&id_autor=:id_autor", putHasCharacter);
+routes.put("/id_hq=:id_hq&id_pers=:id_pers", putHasCharacter);
 
-routes.delete("/id_hq=:id_hq&id_autor=:id_autor", deleteHasCharacter);
+routes.delete("/id_hq=:id_hq&id_pers=:id_pers", deleteHasCharacter);
 
 export default routes;

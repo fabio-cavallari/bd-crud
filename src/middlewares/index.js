@@ -5,6 +5,7 @@ import charactersRouter from "../entities/characters/routes";
 import authorsRouter from "../entities/authors/routes";
 import hasAuthorsRouter from "../entities/hasAuthor/routes";
 import hasCharactersRouter from "../entities/hasCharacter/routes";
+import marvelRouter from "../entities/marvel/routes";
 
 export default app => {
   app.use(bodyParser.json());
@@ -15,4 +16,5 @@ export default app => {
   app.use("/authors", authorsRouter);
   app.use("/hasAuthors", hasAuthorsRouter);
   app.use("/hasCharacters", hasCharactersRouter);
+  app.use("/marvel", marvelRouter);
 };

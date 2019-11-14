@@ -83,7 +83,7 @@ export const putHasCharacter = async (req, res) => {
     const connection = mysql.createConnection(connectionConfig);
 
     const idHq = parseInt(req.params.id_hq);
-    const idAutor = parseInt(req.params.id_autor);
+    const idPers = parseInt(req.params.id_pers);
 
     validateHasCharacterParams(req.body);
     const { historia_quadrinho_id_hq, personagem_id_pers } = req.body;
@@ -95,7 +95,7 @@ export const putHasCharacter = async (req, res) => {
 
     await connection.query(
       sqlQry,
-      [historia_quadrinho_id_hq, personagem_id_pers, idHq, idAutor],
+      [historia_quadrinho_id_hq, personagem_id_pers, idHq, idPers],
       (err, result, fields) => {
         if (err) {
           console.log(err);
@@ -122,14 +122,14 @@ export const deleteHasCharacter = async (req, res) => {
     const connection = mysql.createConnection(connectionConfig);
 
     const idHq = parseInt(req.params.id_hq);
-    const idAutor = parseInt(req.params.id_autor);
+    const idPers = parseInt(req.params.id_pers);
 
     const sqlQry = query().deleteById;
 
     console.log("sqlQuery:", sqlQry);
     console.log("Runing query");
 
-    await connection.query(sqlQry, [idHq, idAutor], (err, result, fields) => {
+    await connection.query(sqlQry, [idHq, idPers], (err, result, fields) => {
       if (err) {
         console.log(err);
         res.status(500).send({ sucess: false, message: err.sqlMessage });
