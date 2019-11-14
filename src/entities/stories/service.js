@@ -1,6 +1,5 @@
 import { query } from "./queries";
 import mysql from "mysql";
-import { validateStoryParams } from "./validations";
 
 const connectionConfig = {
   host: "marveldbdev.cbuvdhpkdqst.us-east-1.rds.amazonaws.com",
@@ -8,6 +7,14 @@ const connectionConfig = {
   user: "admin",
   password: "Ordep34280079!",
   database: "marvel_db"
+};
+
+const validateStoryParams = body => {
+  if (!body.img_url || !body.data_publicacao || !body.titulo) {
+    const error = new Error("requisição incorreta");
+    error.code = 400;
+    throw error;
+  }
 };
 
 export const postStory = async (req, res) => {
