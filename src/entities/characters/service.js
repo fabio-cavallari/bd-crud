@@ -34,7 +34,12 @@ export const postCharacter = async (req, res) => {
       sqlQry,
       [nome, data_aparicao, codinome, motivacao],
       (err, result, fields) => {
-        if (err) throw new Error(err);
+        if (err) {
+          console.log(err);
+          res.status(500).send({ sucess: false, message: err.sqlMessage });
+          connection.end();
+          return;
+        }
         console.log(result);
         console.log("Connection end");
         res.status(200).send({ sucess: true, result: result });
@@ -57,7 +62,12 @@ export const getCharacters = async (req, res) => {
     console.log("Runing query");
 
     await connection.query(sqlQry, (err, result, fields) => {
-      if (err) throw new Error(err);
+      if (err) {
+        console.log(err);
+        res.status(500).send({ sucess: false, message: err.sqlMessage });
+        connection.end();
+        return;
+      }
       console.log(result);
       console.log("Connection end");
       res.status(200).send({ sucess: true, result: result });
@@ -81,7 +91,12 @@ export const getCharacterById = async (req, res) => {
     console.log("Runing query");
 
     await connection.query(sqlQry, [id], (err, result, fields) => {
-      if (err) throw new Error(err);
+      if (err) {
+        console.log(err);
+        res.status(500).send({ sucess: false, message: err.sqlMessage });
+        connection.end();
+        return;
+      }
       console.log(result);
       console.log("Connection end");
       res.status(200).send({ sucess: true, result: result });
@@ -111,7 +126,12 @@ export const putCharacterById = async (req, res) => {
       sqlQry,
       [nome, data_aparicao, codinome, motivacao, id],
       (err, result, fields) => {
-        if (err) throw new Error(err);
+        if (err) {
+          console.log(err);
+          res.status(500).send({ sucess: false, message: err.sqlMessage });
+          connection.end();
+          return;
+        }
         console.log(result);
         console.log("Connection end");
         res.status(200).send({ sucess: true, result: result });
@@ -138,7 +158,12 @@ export const deleteCharacterById = async (req, res) => {
     console.log("Runing query");
 
     await connection.query(sqlQry, [id], (err, result, fields) => {
-      if (err) throw new Error(err);
+      if (err) {
+        console.log(err);
+        res.status(500).send({ sucess: false, message: err.sqlMessage });
+        connection.end();
+        return;
+      }
       console.log(result);
       console.log("Connection end");
       res.status(200).send({ sucess: true, result: result });

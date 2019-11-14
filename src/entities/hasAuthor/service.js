@@ -9,30 +9,29 @@ const connectionConfig = {
   database: "marvel_db"
 };
 
-const validateStoryParams = body => {
-  if (!body.img_url || !body.data_publicacao || !body.titulo) {
+const validateHasAuthorParams = body => {
+  if (!body.historia_quadrinho_id_hq || !body.autor_id_autor) {
     const error = new Error("requisição incorreta");
     error.code = 400;
     throw error;
   }
 };
 
-export const postStory = async (req, res) => {
-  console.log("poststories");
+export const postHasAuthor = async (req, res) => {
+  console.log("postHasAuthor");
   try {
     const connection = mysql.createConnection(connectionConfig);
+    validateHasAuthorParams(req.body);
+    const { historia_quadrinho_id_hq, autor_id_autor } = req.body;
 
-    validateStoryParams(req.body);
-    const { img_url, data_publicacao, titulo } = req.body;
-
-    const sqlQry = query().post;
+    let sqlQry = query().post;
 
     console.log("sqlQuery:", sqlQry);
     console.log("Runing query");
 
     await connection.query(
       sqlQry,
-      [img_url, data_publicacao, titulo],
+      [historia_quadrinho_id_hq, autor_id_autor],
       (err, result, fields) => {
         if (err) {
           console.log(err);
@@ -47,14 +46,12 @@ export const postStory = async (req, res) => {
     );
     connection.end();
   } catch (error) {
-    res
-      .status(error.code || 500)
-      .send({ sucess: false, message: error.message });
+    res.status(error.code).send({ sucess: false, message: error.message });
   }
 };
 
-export const getStories = async (req, res) => {
-  console.log("getstories");
+export const getHasAuthors = async (req, res) => {
+  console.log("getHasAuthors");
   try {
     const connection = mysql.createConnection(connectionConfig);
 
@@ -76,52 +73,21 @@ export const getStories = async (req, res) => {
     });
     connection.end();
   } catch (error) {
-    res
-      .status(error.code || 500)
-      .send({ sucess: false, message: error.message });
+    res.status(error.code).send({ sucess: false, message: error.message });
   }
 };
 
-export const getStoryById = async (req, res) => {
-  console.log("getstories");
+export const putHasAuthor = async (req, res) => {
+  console.log("putHasAuthor");
   try {
     const connection = mysql.createConnection(connectionConfig);
 
-    const id = parseInt(req.params.id);
+    const idHq = parseInt(req.params.id_hq);
+    const idAutor = parseInt(req.params.id_autor);
 
-    const sqlQry = query().getById;
+    validateHasAuthorParams(req.body);
+    const { historia_quadrinho_id_hq, autor_id_autor } = req.body;
 
-    console.log("sqlQuery:", sqlQry);
-    console.log("Runing query");
-
-    await connection.query(sqlQry, [id], (err, result, fields) => {
-      if (err) {
-        console.log(err);
-        res.status(500).send({ sucess: false, message: err.sqlMessage });
-        connection.end();
-        return;
-      }
-      console.log(result);
-      console.log("Connection end");
-      res.status(200).send({ sucess: true, result: result });
-    });
-    connection.end();
-  } catch (error) {
-    res
-      .status(error.code || 500)
-      .send({ sucess: false, message: error.message });
-  }
-};
-
-export const putStoryById = async (req, res) => {
-  console.log("putStories");
-  try {
-    const connection = mysql.createConnection(connectionConfig);
-
-    const id = parseInt(req.params.id);
-
-    validateStoryParams(req.body);
-    const { img_url, data_publicacao, titulo } = req.body;
     const sqlQry = query().putById;
 
     console.log("sqlQuery:", sqlQry);
@@ -129,7 +95,7 @@ export const putStoryById = async (req, res) => {
 
     await connection.query(
       sqlQry,
-      [img_url, parseInt(data_publicacao), titulo, id],
+      [historia_quadrinho_id_hq, autor_id_autor, idHq, idAutor],
       (err, result, fields) => {
         if (err) {
           console.log(err);
@@ -150,19 +116,20 @@ export const putStoryById = async (req, res) => {
   }
 };
 
-export const deleteStoryById = async (req, res) => {
-  console.log("deleteStories");
+export const deleteHasAuthor = async (req, res) => {
+  console.log("deleteHasAuthor");
   try {
     const connection = mysql.createConnection(connectionConfig);
 
-    const id = parseInt(req.params.id);
-    console.log("id", id);
+    const idHq = parseInt(req.params.id_hq);
+    const idAutor = parseInt(req.params.id_autor);
+
     const sqlQry = query().deleteById;
 
     console.log("sqlQuery:", sqlQry);
     console.log("Runing query");
 
-    await connection.query(sqlQry, [id], (err, result, fields) => {
+    await connection.query(sqlQry, [idHq, idAutor], (err, result, fields) => {
       if (err) {
         console.log(err);
         res.status(500).send({ sucess: false, message: err.sqlMessage });

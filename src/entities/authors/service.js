@@ -34,7 +34,12 @@ export const postAuthor = async (req, res) => {
       sqlQry,
       [nome, data_nascimento, tipo],
       (err, result, fields) => {
-        if (err) throw new Error(err);
+        if (err) {
+          console.log(err);
+          res.status(500).send({ sucess: false, message: err.sqlMessage });
+          connection.end();
+          return;
+        }
         console.log(result);
         console.log("Connection end");
         res.status(200).send({ sucess: true, result: result });
@@ -57,7 +62,12 @@ export const getAuthors = async (req, res) => {
     console.log("Runing query");
 
     await connection.query(sqlQry, (err, result, fields) => {
-      if (err) throw new Error(err);
+      if (err) {
+        console.log(err);
+        res.status(500).send({ sucess: false, message: err.sqlMessage });
+        connection.end();
+        return;
+      }
       console.log(result);
       console.log("Connection end");
       res.status(200).send({ sucess: true, result: result });
@@ -81,7 +91,12 @@ export const getAuthorById = async (req, res) => {
     console.log("Runing query");
 
     await connection.query(sqlQry, [id], (err, result, fields) => {
-      if (err) throw new Error(err);
+      if (err) {
+        console.log(err);
+        res.status(500).send({ sucess: false, message: err.sqlMessage });
+        connection.end();
+        return;
+      }
       console.log(result);
       console.log("Connection end");
       res.status(200).send({ sucess: true, result: result });
@@ -111,7 +126,12 @@ export const putAuthorById = async (req, res) => {
       sqlQry,
       [nome, data_nascimento, tipo, id],
       (err, result, fields) => {
-        if (err) throw new Error(err);
+        if (err) {
+          console.log(err);
+          res.status(500).send({ sucess: false, message: err.sqlMessage });
+          connection.end();
+          return;
+        }
         console.log(result);
         console.log("Connection end");
         res.status(200).send({ sucess: true, result: result });
@@ -138,7 +158,12 @@ export const deleteAuthorById = async (req, res) => {
     console.log("Runing query");
 
     await connection.query(sqlQry, [id], (err, result, fields) => {
-      if (err) throw new Error(err);
+      if (err) {
+        console.log(err);
+        res.status(500).send({ sucess: false, message: err.sqlMessage });
+        connection.end();
+        return;
+      }
       console.log(result);
       console.log("Connection end");
       res.status(200).send({ sucess: true, result: result });

@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import storiesRouter from "../entities/stories/routes";
 import charactersRouter from "../entities/characters/routes";
 import authorsRouter from "../entities/authors/routes";
+import hasAuthorsRouter from "../entities/hasAuthor/routes";
 
 export default app => {
   app.use(bodyParser.json());
@@ -11,4 +12,5 @@ export default app => {
   app.use("/stories", storiesRouter);
   app.use("/characters", charactersRouter);
   app.use("/authors", authorsRouter);
+  app.use("/hasAuthors", hasAuthorsRouter);
 };
